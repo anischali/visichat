@@ -10,6 +10,8 @@
 #include <fmt/core.h>
 #include <fmt/format.h>
 
+
+
 using namespace qbackend::model;
 using namespace qbackend::engines;
 
@@ -24,8 +26,6 @@ void initialize_storage()
         storage_engine::create_directory(d_path, true);
     }
 }
-
-
 
 void set_qt_environment()
 {

@@ -19,7 +19,9 @@ qt_add_qml_module(appvisichat
     VERSION 1.0
     QML_FILES
         views/MainWindow.qml
-        RESOURCES resources/visichat.qrc
+    RESOURCES
+        resources/visichat.qrc
+        configs/external_deps.cmake
 )
 
 qt_add_resources(appvisichat "configuration"
@@ -40,24 +42,7 @@ set_target_properties(appvisichat PROPERTIES
     WIN32_EXECUTABLE TRUE
 )
 
-include(FetchContent)
-FetchContent_Declare(Qbackend
-  GIT_REPOSITORY https://github.com/anischali/Qbackend.git
-  GIT_TAG main
-)
-FetchContent_MakeAvailable(Qbackend)
-
-FetchContent_Declare(fmt
-  GIT_REPOSITORY https://github.com/fmtlib/fmt.git
-  GIT_TAG 9.0.0
-)
-FetchContent_MakeAvailable(fmt)
-
-FetchContent_Declare(nlohmann_json
-  GIT_REPOSITORY https://github.com/nlohmann/json.git
-  GIT_TAG v3.11.2
-)
-FetchContent_MakeAvailable(nlohmann_json)
+include(configs/external_deps.cmake)
 
 target_include_directories(appvisichat PRIVATE
     includes/
