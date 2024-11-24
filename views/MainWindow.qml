@@ -37,6 +37,28 @@ ApplicationWindow {
     StackView {
         id: stack
         anchors.fill: parent
+
+        RowLayout {
+            anchors.fill: parent
+
+            Rectangle {
+                anchors.fill: parent
+                color: 'teal'
+                RowLayout {
+                    Label {
+                        text:  qsTr("external ip: " + ext_ip)
+                    }
+
+                    Label {
+                        text:  qsTr("external port: " + ext_port)
+                    }
+
+                    Label {
+                        text:  qsTr("icanhazip: " + icanhazip)
+                    }
+                }
+            }
+        }
     }
 
     footer: ToolBar {

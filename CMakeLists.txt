@@ -10,6 +10,9 @@ find_package(Qt6 6.5 REQUIRED COMPONENTS Core Gui Qml Quick QuickControls2 Quick
 
 qt_standard_project_setup(REQUIRES 6.5)
 
+add_compile_options(-g -ggdb -O0)
+add_link_options(-g -ggdb -O0)
+
 qt_add_executable(appvisichat
     sources/main.cpp
 )
@@ -22,6 +25,8 @@ qt_add_qml_module(appvisichat
     RESOURCES
         resources/visichat.qrc
         configs/external_deps.cmake
+        RESOURCES
+            RESOURCES android/AndroidManifest.xml android/build.gradle android/res/values/libs.xml android/res/xml/qtprovider_paths.xml android/gradle/wrapper/gradle-wrapper.jar android/gradle/wrapper/gradle-wrapper.properties android/gradle.properties android/gradlew android/gradlew.bat
 )
 
 qt_add_resources(appvisichat "configuration"
@@ -57,8 +62,12 @@ target_link_libraries(appvisichat PRIVATE
     fmt::fmt
     Qbackend
     nlohmann_json
+    lite-p2p
 )
 
+set_property(TARGET appvisichat APPEND PROPERTY
+    QT_ANDROID_PACKAGE_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/android
+)
 
 include(GNUInstallDirs)
 install(TARGETS appvisichat

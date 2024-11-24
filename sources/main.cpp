@@ -9,8 +9,9 @@
 #include <storage_engine.hpp>
 #include <fmt/core.h>
 #include <fmt/format.h>
-
-
+#include <lite-p2p/peer_connection.hpp>
+#include <lite-p2p/stun_client.hpp>
+#include <QQmlContext>
 
 using namespace qbackend::model;
 using namespace qbackend::engines;
@@ -55,6 +56,8 @@ int main(int argc, char *argv[])
 
     std::string path = fmt::format("{}/{}", QStandardPaths::writableLocation(QStandardPaths::ConfigLocation).toStdString(), ORG_NAME);
     settings settings(path, APP_NAME);
+    peer_connection peer(5002);
+    stun_client stun(peer.sock_fd);
     qDebug() << path;
 
 restart:
@@ -74,13 +77,21 @@ restart:
         goto restart;
     }
 
-
+    std::string output;
+    int ret = stun.request("stun:stun.l.google.com", 19302);
+    //web_engine::request("https://ipv4.icanhazip.com", "/", &output);
 
     if (qEnvironmentVariableIsEmpty("QT_QUICK_CONTROLS_STYLE") &&
         settings.get_value("style").empty()) {
         QString style;
 #if defined(Q_OS_MACOS)
-        style = QString("iOS");
+        style = QString("iOS");int main(int argc, const char *argv[]) {
+
+            std::string out;
+            web_engine::request(argv[1], "", &out);
+
+            return 0;
+        }
 #elif defined(Q_OS_IOS)
         style = QString("iOS");
 #elif defined(Q_OS_WINDOWS)
@@ -114,6 +125,11 @@ restart:
         &app,
         []() { QCoreApplication::exit(-1); },
         Qt::QueuedConnection);
+
+    std::string s = inet_ntoa(stun.ext_ip.sin_addr);
+    engine.rootContext()->setContextProperty("ext_ip", s.c_str());
+    engine.rootContext()->setContextProperty("ext_port", stun.ext_ip.sin_port);
+    engine.rootContext()->setContextProperty("icanhazip", ret);
 
     engine.setInitialProperties({{ "builtInStyles", builtInStyles }});
 
