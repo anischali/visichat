@@ -78,7 +78,7 @@ restart:
     }
 
     std::string output;
-    int ret = stun.request("stun:stun.l.google.com", 19302);
+    int ret = stun.request("34.203.251.243", 3478);
     //web_engine::request("https://ipv4.icanhazip.com", "/", &output);
 
     if (qEnvironmentVariableIsEmpty("QT_QUICK_CONTROLS_STYLE") &&
