@@ -68,6 +68,11 @@ target_link_libraries(appvisichat PRIVATE
 set_property(TARGET appvisichat APPEND PROPERTY
     QT_ANDROID_PACKAGE_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/android
 )
+if (ANDROID)
+    target_compile_definitions(appvisichat PUBLIC
+        QT_ANDROID_MIN_SDK_VERSION=24
+    )
+endif()
 
 include(GNUInstallDirs)
 install(TARGETS appvisichat

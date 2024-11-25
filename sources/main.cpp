@@ -11,7 +11,10 @@
 #include <fmt/format.h>
 #include <lite-p2p/peer_connection.hpp>
 #include <lite-p2p/stun_client.hpp>
+#include <lite-p2p/network.hpp>
 #include <QQmlContext>
+#include<QDebug>
+
 
 using namespace qbackend::model;
 using namespace qbackend::engines;
@@ -53,12 +56,23 @@ int main(int argc, char *argv[])
 {
     QStringList builtInStyles = { QString("CustomStyle"), QString("Basic"),
                                  QString("Material"), QString("Universal") };
+    std::string console;
 
     std::string path = fmt::format("{}/{}", QStandardPaths::writableLocation(QStandardPaths::ConfigLocation).toStdString(), ORG_NAME);
     settings settings(path, APP_NAME);
-    peer_connection peer(5002);
-    stun_client stun(peer.sock_fd);
-    qDebug() << path;
+    lite_p2p::peer_connection peer(5002);
+    lite_p2p::stun_client stun(peer.sock_fd);
+    std::vector<lite_p2p::network> ifaces_info;
+
+
+    auto ifaces = lite_p2p::network::net_interfaces();
+    for (int i = 0; i < ifaces.size(); ++i) {
+        if (ifaces[i] != "lo") {
+            lite_p2p::network iface(ifaces[i]);
+            ifaces_info.push_back(iface);
+            console += iface.to_string().c_str();
+        }
+    }
 
 restart:
     initialize_storage();
@@ -127,9 +141,13 @@ restart:
         Qt::QueuedConnection);
 
     std::string s = inet_ntoa(stun.ext_ip.sin_addr);
-    engine.rootContext()->setContextProperty("ext_ip", s.c_str());
-    engine.rootContext()->setContextProperty("ext_port", stun.ext_ip.sin_port);
-    engine.rootContext()->setContextProperty("icanhazip", ret);
+
+    console += "ext_ip: ";
+    console += s.c_str();
+    console += "ext_port: ";
+    console += std::to_string(stun.ext_ip.sin_port);
+
+    engine.rootContext()->setContextProperty("screenConsole", console.c_str());
 
     engine.setInitialProperties({{ "builtInStyles", builtInStyles }});
 
