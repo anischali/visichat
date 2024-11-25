@@ -66,12 +66,10 @@ int main(int argc, char *argv[])
 
 
     auto ifaces = lite_p2p::network::net_interfaces();
-    for (int i = 0; i < ifaces.size(); ++i) {
-        if (ifaces[i] != "lo") {
-            lite_p2p::network iface(ifaces[i]);
-            ifaces_info.push_back(iface);
-            console += iface.to_string().c_str();
-        }
+    for (auto &&i : ifaces) {
+        lite_p2p::network iface(i);
+        ifaces_info.push_back(iface);
+        console += iface.to_string().c_str();
     }
 
 restart:
