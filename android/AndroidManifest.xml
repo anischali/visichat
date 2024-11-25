@@ -1,5 +1,13 @@
 <?xml version="1.0"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.visibog.visichat" android:installLocation="auto" android:versionCode="-- %%INSERT_VERSION_CODE%% --" android:versionName="-- %%INSERT_VERSION_NAME%% --">
+    <uses-permission android:name="android.permission.INTERNET" android:required="true"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" android:required="true"/>
+    <uses-permission android:name="android.permission.ACCESS_CHECKIN_PROPERTIES" android:required="true"/>
+    <uses-permission android:name="android.permission.SET_DEBUG_APP" android:required="true"/>
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" android:required="true"/>
+    <uses-permission android:name="android.permission.CAMERA" android:required="true"/>
+
+    <!-- %%INSERT_FEATURES -->
     <supports-screens android:anyDensity="true" android:largeScreens="true" android:normalScreens="true" android:smallScreens="true"/>
     <application android:name="org.qtproject.qt.android.bindings.QtApplication" android:hardwareAccelerated="true" android:label="visichat" android:requestLegacyExternalStorage="true" android:allowBackup="true" android:fullBackupOnly="false">
         <activity android:name="org.qtproject.qt.android.bindings.QtActivity" android:configChanges="orientation|uiMode|screenLayout|screenSize|smallestScreenSize|layoutDirection|locale|fontScale|keyboard|keyboardHidden|navigation|mcc|mnc|density" android:launchMode="singleTop" android:screenOrientation="unspecified" android:exported="true" android:label="visichat">
@@ -15,10 +23,5 @@
             <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/qtprovider_paths"/>
         </provider>
     </application>
-    <uses-permission android:name="android.permission.INTERNET" android:required="true"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" android:required="true"/>
-    <uses-permission android:name="android.permission.ACCESS_CHECKIN_PROPERTIES" android:required="true"/>
-    <uses-permission android:name="android.permission.SET_DEBUG_APP" android:required="true"/>
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" android:required="true" />
-    <uses-permission android:name="android.permission.CAMERA" android:required="true" />
+<uses-sdk android:minSdkVersion="28" android:targetSdkVersion="31"/>
 </manifest>
