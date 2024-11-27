@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
     std::vector<lite_p2p::network> ifaces_info;
 
 
-    auto ifaces = lite_p2p::network::net_interfaces();
+    auto ifaces = lite_p2p::network::network_interfaces();
     for (auto &&i : ifaces) {
         lite_p2p::network iface(i);
         ifaces_info.push_back(iface);
@@ -90,7 +90,7 @@ restart:
     }
 
     std::string output;
-    int ret = stun.request("34.203.251.243", 3478);
+    int ret = stun.request("34.203.251.243", 3478, AF_INET);
     //web_engine::request("https://ipv4.icanhazip.com", "/", &output);
 
     if (qEnvironmentVariableIsEmpty("QT_QUICK_CONTROLS_STYLE") &&
@@ -138,12 +138,12 @@ restart:
         []() { QCoreApplication::exit(-1); },
         Qt::QueuedConnection);
 
-    std::string s = inet_ntoa(stun.ext_ip.sin_addr);
+    std::string s = lite_p2p::network::addr_to_string(lite_p2p::network::inet_address(&stun.ext_ip));
 
     console += "ext_ip: ";
     console += s.c_str();
     console += "ext_port: ";
-    console += std::to_string(stun.ext_ip.sin_port);
+    console += std::to_string(lite_p2p::network::inet_address(&stun.ext_ip)->sin_port);
 
     engine.rootContext()->setContextProperty("screenConsole", console.c_str());
 
