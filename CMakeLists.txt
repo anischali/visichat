@@ -24,7 +24,7 @@ qt_add_qml_module(appvisichat
         views/MainWindow.qml
         views/ChatMsg.qml
         views/MainApp.qml
-        views/RoundButton.qml
+
     RESOURCES
         resources/visichat.qrc
         configs/external_deps.cmake

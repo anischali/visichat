@@ -6,9 +6,9 @@ Item {
     property string avatar: qsTr("")
     property string username: qsTr("")
     property string message: qsTr("")
+    property string textColor: "white"
 
     Rectangle {
-        id: rectangle
         height: parent.height
         width: parent.width
         color: "#00ffffff"
@@ -29,33 +29,31 @@ Item {
 
         Text {
             id: user_name
-            x: 85
-            y: 10
+            x: parent.height + 5
+            y: 0
             text: username
             font.pixelSize: 23
             horizontalAlignment: Text.AlignLeft
-            verticalAlignment: Text.AlignVCenter
             font.bold: true
-            color: "white"
+            color: textColor
         }
 
         Text {
             id: last_msg
-            x: 85
-            y: 45
+            x: parent.height + 5
+            y: parent.height - (parent.height / 3)
             text: message
             font.pixelSize: 12
             horizontalAlignment: Text.AlignLeft
-            verticalAlignment: Text.AlignVCenter
-            color: "white"
+            color: textColor
         }
 
         Image {
             id: status_icon
-            x: 56
-            y: 56
-            width: 24
-            height: 24
+            x: parent.height - 16
+            y: parent.height - 16
+            width: 16
+            height: 16
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 0
             source: "../resources/images/offline.png"

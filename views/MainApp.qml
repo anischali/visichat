@@ -18,44 +18,50 @@ Item {
         id: header_tab
         x: 220
         y: 363
-        width: 360
-        height: 56
-        visible: true
+        height: 48
+        position: ToolBar.Header
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.top: parent.top
-        contentHeight: 48
 
-        Flow {
-            x: 0
-            y: 0
+        RowLayout {
+            id: rowLayoutHeader
             anchors.right: parent.right
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            layoutDirection: Qt.LeftToRight
+
             RoundButton {
                 id: share_btn
-                text: qsTr("")
-                icon.width: 32
-                icon.height: 32
                 icon.source: "../resources/images/share.png"
-                icon.color: "#babfb6"
+                text: qsTr("")
+                flat: true
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                icon.height: 20
+                icon.width: 20
+                icon.color: "#BABFB6"
             }
 
             RoundButton {
                 id: import_btn
-                text: qsTr("")
-                icon.width: 32
-                icon.height: 32
                 icon.source: "../resources/images/import.png"
-                icon.color: "#babfb6"
+                text: qsTr("")
+                flat: true
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                icon.height: 20
+                icon.width: 20
+                icon.color: "#BABFB6"
             }
 
             RoundButton {
                 id: search_btn
-                visible: true
-                text: qsTr("")
-                icon.width: 32
-                icon.height: 32
                 icon.source: "../resources/images/search.png"
-                icon.color: "#babfb6"
+                text: qsTr("")
+                flat: true
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                icon.height: 20
+                icon.width: 20
+                icon.color: "#BABFB6"
             }
         }
     }
@@ -65,12 +71,11 @@ Item {
         x: 509
         y: 611
         width: 360
-        height: 80
+        height: 64
         position: ToolBar.Footer
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        contentHeight: 64
 
         RowLayout {
             id: rowLayout
@@ -79,29 +84,32 @@ Item {
             RoundButton {
                 id: msgs_btn
                 text: ""
+                flat: true
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 icon.color: "#BABFB6"
-                icon.height: 48
-                icon.width: 48
+                icon.height: 24
+                icon.width: 24
                 icon.source: "../resources/images/mesgs.png"
             }
 
             RoundButton {
                 id: calls
                 text: qsTr("")
+                flat: true
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 icon.color: "#BABFB6"
-                icon.height: 48
-                icon.width: 48
+                icon.height: 24
+                icon.width: 24
                 icon.source: "../resources/images/calls.png"
             }
 
             RoundButton {
                 id: contacts
                 text: qsTr("")
+                flat: true
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                icon.height: 48
-                icon.width: 48
+                icon.height: 24
+                icon.width: 24
                 icon.source: "../resources/images/contacts.png"
                 icon.color: "#BABFB6"
             }
@@ -114,8 +122,8 @@ Item {
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.bottom: parent.bottom
-        anchors.topMargin: 56
-        anchors.bottomMargin: 80
+        anchors.topMargin: 48
+        anchors.bottomMargin: 64
         interactive: false
         enabled: false
 
@@ -128,22 +136,13 @@ Item {
             Rectangle {
                 id: rectangle
                 anchors.fill: parent
-                color: "#060e18"
+                color: "#141414"
 
                 ScrollView {
-                    id: scrollView
-                    x: 0
-                    y: 0
-                    anchors.horizontalCenter: parent.horizontalCenter
+                    clip: true
                     anchors.fill: parent
-                    enabled: true
 
                     ColumnLayout {
-                        x: 0
-                        width: 360
-                        height: 480
-                        anchors.top: parent.top
-                        anchors.topMargin: 0
                         anchors.fill: parent
 
                         Repeater {
@@ -151,11 +150,12 @@ Item {
                             model: 20
 
                             ChatMsg {
-                                height: 80
+                                height: 48
                                 Layout.fillWidth: true
                                 username: qsTr("anis " + index)
                                 message: qsTr("ceci etait le dernier message")
                                 status: 0
+                                textColor: "white"
                                 avatar: "../resources/images/default-avatar.png"
                             }
                         }
