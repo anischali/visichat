@@ -15,30 +15,15 @@ Page {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-
+        
         RowLayout {
             id: rowLayout
             anchors.fill: parent
-
-
-            TextField {
-                id: textField
-                height: 48
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                placeholderText: qsTr("Text Field")
-            }
-
+            
             RoundButton {
                 id: roundButton
                 text: "+"
             }
-
-            RoundButton {
-                id: roundButton1
-                text: "+"
-            }
-
         }
     }
 }

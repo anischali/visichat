@@ -22,8 +22,9 @@ qt_add_qml_module(appvisichat
     VERSION 1.0
     QML_FILES
         views/MainWindow.qml
-        views/ChatMsg.qml
+        views/ChatMsgItem.qml
         views/MainApp.qml
+        views/ChatMsg.qml
 
     RESOURCES
         resources/visichat.qrc

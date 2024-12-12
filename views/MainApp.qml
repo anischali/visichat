@@ -149,7 +149,7 @@ Item {
                             id: messages
                             model: 20
 
-                            ChatMsg {
+                            ChatMsgItem {
                                 height: 48
                                 Layout.fillWidth: true
                                 username: qsTr("anis " + index)
