@@ -19,59 +19,43 @@ Item {
         x: 220
         y: 363
         width: 360
-        height: 80
+        height: 56
         visible: true
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.top: parent.top
         contentHeight: 48
 
-        Row {
-            width: 66
-            height: 80
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.horizontalCenter: parent.horizontalCenter
-            TabButton {
+        Flow {
+            x: 0
+            y: 0
+            anchors.right: parent.right
+            RoundButton {
                 id: share_btn
-                x: -73
                 text: qsTr("")
-                icon.width: 48
+                icon.width: 32
+                icon.height: 32
                 icon.source: "../resources/images/share.png"
-                icon.height: 48
                 icon.color: "#babfb6"
-                display: AbstractButton.IconOnly
-                Layout.preferredWidth: 80
-                Layout.fillWidth: false
-                Layout.fillHeight: true
             }
 
-            TabButton {
+            RoundButton {
                 id: import_btn
-                x: -1
                 text: qsTr("")
-                icon.width: 48
+                icon.width: 32
+                icon.height: 32
                 icon.source: "../resources/images/import.png"
-                icon.height: 48
                 icon.color: "#babfb6"
-                display: AbstractButton.IconOnly
-                Layout.preferredWidth: 80
-                Layout.fillWidth: false
-                Layout.fillHeight: true
             }
 
-            TabButton {
+            RoundButton {
                 id: search_btn
-                x: 71
                 visible: true
                 text: qsTr("")
-                icon.width: 48
+                icon.width: 32
+                icon.height: 32
                 icon.source: "../resources/images/search.png"
-                icon.height: 48
                 icon.color: "#babfb6"
-                display: AbstractButton.IconOnly
-                Layout.preferredWidth: 80
-                Layout.fillWidth: false
-                Layout.fillHeight: true
             }
         }
     }
@@ -90,49 +74,36 @@ Item {
 
         RowLayout {
             id: rowLayout
-            anchors.left: parent.left
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
-            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.fill: parent
 
-            TabButton {
-                id: contacts
-                text: qsTr("")
-                icon.height: 64
-                icon.width: 64
-                icon.source: "../resources/images/contacts.png"
-                display: AbstractButton.IconOnly
-                icon.color: "#BABFB6"
-                Layout.margins: 0
-                Layout.columnSpan: 1
-                Layout.fillHeight: true
-                Layout.fillWidth: true
-            }
-            TabButton {
-                id: calls
-                text: qsTr("")
-                icon.color: "#BABFB6"
-                icon.height: 64
-                icon.width: 64
-                display: AbstractButton.IconOnly
-                icon.source: "../resources/images/calls.png"
-                Layout.margins: 0
-                Layout.columnSpan: 1
-                Layout.fillHeight: true
-                Layout.fillWidth: true
-            }
-            TabButton {
+            RoundButton {
                 id: msgs_btn
                 text: ""
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 icon.color: "#BABFB6"
-                icon.height: 64
-                icon.width: 64
+                icon.height: 48
+                icon.width: 48
                 icon.source: "../resources/images/mesgs.png"
-                display: AbstractButton.IconOnly
-                Layout.margins: 0
-                Layout.columnSpan: 1
-                Layout.fillHeight: true
-                Layout.fillWidth: true
+            }
+
+            RoundButton {
+                id: calls
+                text: qsTr("")
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                icon.color: "#BABFB6"
+                icon.height: 48
+                icon.width: 48
+                icon.source: "../resources/images/calls.png"
+            }
+
+            RoundButton {
+                id: contacts
+                text: qsTr("")
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                icon.height: 48
+                icon.width: 48
+                icon.source: "../resources/images/contacts.png"
+                icon.color: "#BABFB6"
             }
         }
     }
@@ -143,28 +114,50 @@ Item {
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.bottom: parent.bottom
-        anchors.topMargin: 80
+        anchors.topMargin: 56
         anchors.bottomMargin: 80
         interactive: false
         enabled: false
 
         Item {
             id: messages_tab
-            ScrollView {
-                anchors.fill: parent
-                enabled: true
-                ColumnLayout {
-                    Repeater {
-                        id: messages
-                        model: 20
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            anchors.topMargin: 0
 
-                        ChatMsg {
-                            height: 80
-                            Layout.fillWidth: true
-                            name: qsTr("anis " + index)
-                            message: qsTr("ceci etait le dernier message")
-                            status: 0
-                            avatar: "../resources/images/default-avatar.png"
+            Rectangle {
+                id: rectangle
+                anchors.fill: parent
+                color: "#060e18"
+
+                ScrollView {
+                    id: scrollView
+                    x: 0
+                    y: 0
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.fill: parent
+                    enabled: true
+
+                    ColumnLayout {
+                        x: 0
+                        width: 360
+                        height: 480
+                        anchors.top: parent.top
+                        anchors.topMargin: 0
+                        anchors.fill: parent
+
+                        Repeater {
+                            id: messages
+                            model: 20
+
+                            ChatMsg {
+                                height: 80
+                                Layout.fillWidth: true
+                                username: qsTr("anis " + index)
+                                message: qsTr("ceci etait le dernier message")
+                                status: 0
+                                avatar: "../resources/images/default-avatar.png"
+                            }
                         }
                     }
                 }

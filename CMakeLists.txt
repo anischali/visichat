@@ -46,6 +46,7 @@ qt_add_qml_module(appvisichat
             android/gradlew.bat
             QML_FILES views/ChatMsg.qml
             QML_FILES views/MainApp.qml
+            QML_FILES views/RoundButton.qml
 )
 
 qt_add_resources(appvisichat "configuration"
