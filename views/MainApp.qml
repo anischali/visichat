@@ -7,11 +7,6 @@ import QtQuick.Layouts 2.15
 import QtQuick.Controls 2.15
 
 Item {
-
-    id: main_app
-
-    width: parent.width
-    height: parent.height
     visible: true
 
     ToolBar {
@@ -32,20 +27,10 @@ Item {
             layoutDirection: Qt.LeftToRight
 
             RoundButton {
-                id: share_btn
-                icon.source: "../resources/images/share.png"
-                text: qsTr("")
-                flat: true
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                icon.height: 20
-                icon.width: 20
-                icon.color: "#BABFB6"
-            }
-
-            RoundButton {
                 id: import_btn
                 icon.source: "../resources/images/import.png"
                 text: qsTr("")
+                antialiasing: true
                 flat: true
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 icon.height: 20
@@ -57,6 +42,7 @@ Item {
                 id: search_btn
                 icon.source: "../resources/images/search.png"
                 text: qsTr("")
+                antialiasing: true
                 flat: true
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 icon.height: 20
@@ -84,6 +70,7 @@ Item {
             RoundButton {
                 id: msgs_btn
                 text: ""
+                antialiasing: true
                 flat: true
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 icon.color: "#BABFB6"
@@ -95,6 +82,7 @@ Item {
             RoundButton {
                 id: calls
                 text: qsTr("")
+                antialiasing: true
                 flat: true
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 icon.color: "#BABFB6"
@@ -106,6 +94,7 @@ Item {
             RoundButton {
                 id: contacts
                 text: qsTr("")
+                antialiasing: true
                 flat: true
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 icon.height: 24
@@ -133,6 +122,12 @@ Item {
             anchors.bottom: parent.bottom
             anchors.topMargin: 0
 
+            ChatMsg {
+                id: msgPage
+                visible: false
+                anchors.fill: parent
+            }
+
             Rectangle {
                 id: rectangle
                 anchors.fill: parent
@@ -152,9 +147,10 @@ Item {
                             ChatMsgItem {
                                 height: 48
                                 Layout.fillWidth: true
+                                id: msgItem
                                 username: qsTr("anis " + index)
                                 message: qsTr("ceci etait le dernier message")
-                                status: 0
+                                status: 1
                                 textColor: "white"
                                 avatar: "../resources/images/default-avatar.png"
                             }

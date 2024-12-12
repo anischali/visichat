@@ -38,6 +38,11 @@ qt_add_qml_module(appvisichat
         resources/images/offline.png
         resources/images/online.png
         resources/images/busy.png
+        resources/images/info.png
+        resources/images/attach.png
+        resources/images/record.png
+        resources/images/send.png
+        resources/images/call.png
         resources/images/default-avatar.png
         android/AndroidManifest.xml
         android/build.gradle android/res/values/libs.xml

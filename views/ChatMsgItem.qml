@@ -8,7 +8,22 @@ Item {
     property string message: qsTr("")
     property string textColor: "white"
 
+    onStatusChanged: {
+        switch (status) {
+        case 0:
+            status_icon.source = "../resources/images/offline.png"
+            break
+        case 1:
+            status_icon.source = "../resources/images/online.png"
+            break
+        case 2:
+            status_icon.source = "../resources/images/busy.png"
+            break
+        }
+    }
+
     Rectangle {
+        id: msgRect
         height: parent.height
         width: parent.width
         color: "#00ffffff"
@@ -25,6 +40,7 @@ Item {
             anchors.bottom: parent.bottom
             source: avatar
             fillMode: Image.PreserveAspectFit
+            antialiasing: true
         }
 
         Text {
@@ -56,8 +72,9 @@ Item {
             height: 16
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 0
-            source: "../resources/images/offline.png"
+            source: "../resources/images/online.png"
             fillMode: Image.PreserveAspectFit
+            antialiasing: true
         }
     }
 }

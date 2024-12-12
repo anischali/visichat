@@ -13,5 +13,12 @@ Window {
     height: Screen.height
     visible: true
 
-    MainApp {}
+    StackView {
+        id: mainStack
+        anchors.fill: parent
+
+        initialItem: ChatMsg {
+            anchors.fill: parent
+        }
+    }
 }
