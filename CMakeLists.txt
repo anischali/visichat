@@ -22,6 +22,9 @@ qt_add_qml_module(appvisichat
     VERSION 1.0
     QML_FILES
         views/MainWindow.qml
+        views/ChatMsg.qml
+        views/MainApp.qml
+        views/RoundButton.qml
     RESOURCES
         resources/visichat.qrc
         configs/external_deps.cmake
@@ -35,18 +38,14 @@ qt_add_qml_module(appvisichat
         resources/images/online.png
         resources/images/busy.png
         resources/images/default-avatar.png
-        RESOURCES
-            android/AndroidManifest.xml
-            android/build.gradle android/res/values/libs.xml
-            android/res/xml/qtprovider_paths.xml
-            android/gradle/wrapper/gradle-wrapper.jar
-            android/gradle/wrapper/gradle-wrapper.properties
-            android/gradle.properties
-            android/gradlew
-            android/gradlew.bat
-            QML_FILES views/ChatMsg.qml
-            QML_FILES views/MainApp.qml
-            QML_FILES views/RoundButton.qml
+        android/AndroidManifest.xml
+        android/build.gradle android/res/values/libs.xml
+        android/res/xml/qtprovider_paths.xml
+        android/gradle/wrapper/gradle-wrapper.jar
+        android/gradle/wrapper/gradle-wrapper.properties
+        android/gradle.properties
+        android/gradlew
+        android/gradlew.bat
 )
 
 qt_add_resources(appvisichat "configuration"
