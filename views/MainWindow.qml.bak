@@ -1,0 +1,137 @@
+import QtQuick 2.15
+import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.15
+
+ApplicationWindow {
+    visible: true
+    width: 360
+    height: 640
+    title: "Chat App"
+
+    // Main layout
+    ColumnLayout {
+        anchors.fill: parent
+
+        // Header
+        Rectangle {
+            Layout.fillWidth: true
+            height: 50
+            color: "#075E54" // WhatsApp-like green
+
+            RowLayout {
+                anchors.fill: parent
+                spacing: 10
+
+                Image {
+                    source: "avatar.png" // User avatar
+                    width: 40
+                    height: 40
+                    fillMode: Image.PreserveAspectFit
+                }
+
+                Text {
+                    text: "Chat with Alice"
+                    color: "white"
+                    font.pixelSize: 18
+                }
+
+                Rectangle {
+                    Layout.fillWidth: true // Spacer
+                    color: "transparent"
+                }
+
+                Button {
+                    icon.source: "search.png"
+                    background: Rectangle {
+                        color: "transparent"
+                    }
+                }
+
+                Button {
+                    icon.source: "menu.png"
+                    background: Rectangle {
+                        color: "transparent"
+                    }
+                }
+            }
+        }
+
+        // Message list
+        ListView {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            model: ListModel {
+                id: messagesList
+            }
+
+            delegate: RowLayout {
+                spacing: 10
+                width: parent.width
+                anchors.margins: 5
+
+                TextField {
+                    Layout.margins: 10
+                    Layout.alignment: left
+                    background: Rectangle {
+                        width: 340
+                        color: fromUser ? "#DCF8C6" : "white"
+                        anchors.horizontalCenter: fromUser ? undefined : parent.horizontalCenter
+                        radius: 5
+                    }
+
+                    Text {
+                        text: message
+                        anchors.centerIn: parent
+                        color: "black"
+                        font.pixelSize: 14
+                    }
+                }
+            }
+        }
+
+        // Input bar
+        Rectangle {
+            Layout.fillWidth: true
+            height: 50
+            color: "#ECE5DD"
+
+            RowLayout {
+                anchors.fill: parent
+                spacing: 10
+                anchors.margins: 5
+
+                TextField {
+                    id: messageInput
+                    Layout.fillWidth: true
+                    font.pixelSize: 16
+                    color: "black"
+                    background: Rectangle {
+                        color: "white"
+                        border.color: "#CFCFCF"
+                        radius: 5
+                    }
+                }
+
+                Button {
+                    text: "Send"
+                    background: Rectangle {
+                        color: "#075E54"
+                    }
+                    font.pixelSize: 16
+                    onClicked: {
+                        if (messageInput.text.trim() !== "") {
+                            // Add a new message to the model
+                            messagesList.append({
+                                                    "message": messageInput.text,
+                                                    "fromUser": true
+                                                })
+
+                            // Clear the input field
+                            messageInput.text = ""
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

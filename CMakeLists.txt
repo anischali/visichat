@@ -25,8 +25,27 @@ qt_add_qml_module(appvisichat
     RESOURCES
         resources/visichat.qrc
         configs/external_deps.cmake
+        resources/images/mesgs.png
+        resources/images/calls.png
+        resources/images/contacts.png
+        resources/images/import.png
+        resources/images/search.png
+        resources/images/share.png
+        resources/images/offline.png
+        resources/images/online.png
+        resources/images/busy.png
+        resources/images/default-avatar.png
         RESOURCES
-            RESOURCES android/AndroidManifest.xml android/build.gradle android/res/values/libs.xml android/res/xml/qtprovider_paths.xml android/gradle/wrapper/gradle-wrapper.jar android/gradle/wrapper/gradle-wrapper.properties android/gradle.properties android/gradlew android/gradlew.bat
+            android/AndroidManifest.xml
+            android/build.gradle android/res/values/libs.xml
+            android/res/xml/qtprovider_paths.xml
+            android/gradle/wrapper/gradle-wrapper.jar
+            android/gradle/wrapper/gradle-wrapper.properties
+            android/gradle.properties
+            android/gradlew
+            android/gradlew.bat
+            QML_FILES views/ChatMsg.qml
+            QML_FILES views/MainApp.qml
 )
 
 qt_add_resources(appvisichat "configuration"
@@ -69,6 +88,14 @@ set_property(TARGET appvisichat APPEND PROPERTY
     QT_ANDROID_PACKAGE_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/android
 )
 if (ANDROID)
+    FetchContent_Declare(
+        android_openssl
+        DOWNLOAD_EXTRACT_TIMESTAMP true
+        URL https://github.com/KDAB/android_openssl/archive/refs/heads/master.zip
+    )
+    FetchContent_MakeAvailable(android_openssl)
+    include(${android_openssl_SOURCE_DIR}/android_openssl.cmake)
+    add_android_openssl_libraries(appvisichat)
     target_compile_definitions(appvisichat PUBLIC
         QT_ANDROID_MIN_SDK_VERSION=24
     )

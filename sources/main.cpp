@@ -11,9 +11,11 @@
 #include <fmt/format.h>
 #include <lite-p2p/peer_connection.hpp>
 #include <lite-p2p/stun_client.hpp>
+#include <lite-p2p/turn_client.hpp>
 #include <lite-p2p/network.hpp>
 #include <QQmlContext>
-#include<QDebug>
+#include <thread>
+#include <QDebug>
 
 
 using namespace qbackend::model;
@@ -52,8 +54,85 @@ uint32_t get_dpi_scale_factor(void)
     return std::ceil((dpi + 0.5) / 96.0) + 1;
 }
 
+void vprint(QQmlApplicationEngine *engine, std::string str) {
+    engine->rootContext()->setContextProperty("console_message", str.c_str());
+}
+/*
+int start_chat(int argc, const char *argv[]) {
+        if (argc < 5) {
+            printf("wrong arguments number !\n");
+            exit(0);
+        }
+
+        srand(time(NULL));
+        int family = atoi(argv[1]) == 6 ? AF_INET6 : AF_INET;
+        lite_p2p::peer_connection conn(family, atoi(argv[4]));
+        lite_p2p::turn_client turn(conn.sock_fd);
+        struct stun_session_t s_turn = {
+        .user = "free",
+        .software = "lite-p2p v 1.0",
+        .realm = "freestun.net",
+        .lifetime = 60,
+        .protocol = IPPROTO_UDP,
+        .family = family,
+    };
+
+        struct stun_session_t s_turn = {
+            .user = "visi",
+            .software = "lite-p2p v 1.0",
+            .realm = "visibog.org",
+            .key_algo = SHA_ALGO_MD5,
+            .password_algo = SHA_ALGO_CLEAR,
+            .hmac_algo = SHA_ALGO_SHA1,
+            .lifetime = 60,
+            .protocol = IPPROTO_UDP,
+            .family = family == AF_INET6 ? INET_IPV6 : INET_IPV4,
+            .lt_cred_mech = true,
+        };
+        session_config c;
+        lite_p2p::network::resolve(&s_turn.server, family, argv[2], atoi(argv[3]));
+
+        c.stun_generate_key(&s_turn, "/0X8VMBsdnlL5jWq5xu7ZA==");
+
+        c.stun_register_session(&s_turn);
+
+        lite_p2p::network::string_to_addr(family, argv[6], &conn.remote);
+        lite_p2p::network::set_port(&conn.remote, atoi(argv[5]));
+
+        int ret = turn.allocate_request(&s_turn);
+        if (ret < 0) {
+            printf("request failed with: %d\n", ret);
+            exit(-1);
+        }
+
+        ret = turn.create_permission_request(&s_turn, &conn.remote);
+        ret = turn.bind_channel_request(&s_turn, &conn.remote, htons(rand_int(0x4000,0x4FFF)));
+        ret = turn.refresh_request(&s_turn, s_turn.lifetime);
+        //ret = turn.send_request_data(&s_turn, &conn.remote, s_buf);
+
+        printf("mapped addr: %s:%d relayed addr: %s:%d\n",
+               lite_p2p::network::addr_to_string(&s_turn.mapped_addr).c_str(),
+               lite_p2p::network::get_port(&s_turn.mapped_addr),
+               lite_p2p::network::addr_to_string(&s_turn.relayed_addr).c_str(),
+               lite_p2p::network::get_port(&s_turn.relayed_addr));
+
+
+        printf("bind: %s [%d]\n", lite_p2p::network::addr_to_string(&conn.local).c_str(), lite_p2p::network::get_port(&conn.local));
+        printf("peer: %s [%d]\n", lite_p2p::network::addr_to_string(&conn.remote).c_str(), lite_p2p::network::get_port(&conn.remote));
+
+        std::thread recver(visichat_listener, &conn);
+        std::thread sender(visichat_sender, &conn);
+
+        recver.join();
+        sender.join();
+
+        return 0;
+}
+
+*/
 int main(int argc, char *argv[])
 {
+    srand(time(NULL));
     QStringList builtInStyles = { QString("CustomStyle"), QString("Basic"),
                                  QString("Material"), QString("Universal") };
     std::string console;
@@ -64,13 +143,6 @@ int main(int argc, char *argv[])
     lite_p2p::stun_client stun(peer.sock_fd);
     std::vector<lite_p2p::network> ifaces_info;
 
-
-    auto ifaces = lite_p2p::network::network_interfaces();
-    for (auto &&i : ifaces) {
-        lite_p2p::network iface(i);
-        ifaces_info.push_back(iface);
-        console += iface.to_string().c_str();
-    }
 
 restart:
     initialize_storage();
@@ -90,8 +162,6 @@ restart:
     }
 
     std::string output;
-    int ret = stun.request("34.203.251.243", 3478, AF_INET);
-    //web_engine::request("https://ipv4.icanhazip.com", "/", &output);
 
     if (qEnvironmentVariableIsEmpty("QT_QUICK_CONTROLS_STYLE") &&
         settings.get_value("style").empty()) {
@@ -138,14 +208,6 @@ restart:
         []() { QCoreApplication::exit(-1); },
         Qt::QueuedConnection);
 
-    std::string s = lite_p2p::network::addr_to_string(lite_p2p::network::inet_address(&stun.ext_ip));
-
-    console += "ext_ip: ";
-    console += s.c_str();
-    console += "ext_port: ";
-    console += std::to_string(lite_p2p::network::inet_address(&stun.ext_ip)->sin_port);
-
-    engine.rootContext()->setContextProperty("screenConsole", console.c_str());
 
     engine.setInitialProperties({{ "builtInStyles", builtInStyles }});
 
