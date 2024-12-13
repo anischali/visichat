@@ -113,77 +113,72 @@ Item {
         anchors.bottom: parent.bottom
         anchors.topMargin: 48
         anchors.bottomMargin: 64
-        interactive: false
-        enabled: false
+        background: Rectangle {
+            color: "#242424"
+        }
 
         Item {
             id: messages_tab
             anchors.top: parent.top
             anchors.bottom: parent.bottom
-            anchors.topMargin: 0
+            anchors.topMargin: 10
+            anchors.bottomMargin: 10
 
             ChatMsg {
                 id: msgPage
-                visible: false
                 anchors.fill: parent
+                visible: false
             }
 
             ScrollView {
                 id: scrollView
                 anchors.fill: parent
-                background: Rectangle {
+
+                ColumnLayout {
                     anchors.fill: parent
-                    color: "#242424"
-                }
+                    Repeater {
+                        id: messages
+                        model: [{
+                                "username": "anis",
+                                "message": "ceci etait le dernier message",
+                                "avatar": "../resources/images/default-avatar.png",
+                                "status": 3
+                            }, {
+                                "username": "tiph",
+                                "message": "ceci etait le dernier message",
+                                "avatar": "../resources/images/default-avatar.png",
+                                "status": 1
+                            }, {
+                                "username": "gaby",
+                                "message": "ceci etait le dernier message",
+                                "avatar": "../resources/images/default-avatar.png",
+                                "status": 2
+                            }, {
+                                "username": "roza",
+                                "message": "ceci etait le dernier message",
+                                "avatar": "../resources/images/default-avatar.png",
+                                "status": 2
+                            }, {
+                                "username": "doudouch",
+                                "message": "ceci etait le dernier message",
+                                "avatar": "../resources/images/default-avatar.png",
+                                "status": 3
+                            }]
 
-                ListView {
-                    id: messages
-                    spacing: 20
-                    interactive: false
-                    clip: true
-                    anchors.fill: parent
+                        delegate: ChatMsgItem {
+                            id: msgItem
+                            height: 48
+                            Layout.fillWidth: true
+                            username: qsTr(modelData["username"])
+                            message: qsTr(modelData["message"])
+                            status: modelData["status"]
+                            textColor: "white"
+                            avatar: modelData["avatar"]
 
-                    model: [{
-                            "username": "anis",
-                            "message": "ceci etait le dernier message",
-                            "avatar": "../resources/images/default-avatar.png",
-                            "status": 0
-                        }, {
-                            "username": "tiph",
-                            "message": "ceci etait le dernier message",
-                            "avatar": "../resources/images/default-avatar.png",
-                            "status": 1
-                        }, {
-                            "username": "gaby",
-                            "message": "ceci etait le dernier message",
-                            "avatar": "../resources/images/default-avatar.png",
-                            "status": 2
-                        }, {
-                            "username": "roza",
-                            "message": "ceci etait le dernier message",
-                            "avatar": "../resources/images/default-avatar.png",
-                            "status": 2
-                        }, {
-                            "username": "doudouch",
-                            "message": "ceci etait le dernier message",
-                            "avatar": "../resources/images/default-avatar.png",
-                            "status": 0
-                        }]
-
-                    delegate: ChatMsgItem {
-                        height: 48
-                        Layout.fillWidth: true
-                        id: msgItem
-                        username: qsTr(modelData["username"])
-                        message: qsTr(modelData["message"])
-                        status: modelData["status"]
-                        textColor: "white"
-                        avatar: modelData["avatar"]
-                        MouseArea {
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            onClicked: {
-                                console.log("clicked !!!")
+                            onClick: function (u, a) {
+                                msgPage.username = u
+                                msgPage.avatar = a
+                                mainStack.push(msgPage)
                             }
                         }
                     }

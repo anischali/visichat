@@ -1,4 +1,5 @@
 import QtQuick 6.5
+import QtQuick.Controls
 
 Item {
 
@@ -8,25 +9,23 @@ Item {
     property string message: qsTr("")
     property string textColor: "white"
 
+    signal click(string username, string avatar)
+
     function set_status(status) {
         switch (status) {
-        case 0:
-            status_icon.source = "../resources/images/offline.png"
-            break
         case 1:
             status_icon.source = "../resources/images/online.png"
             break
         case 2:
             status_icon.source = "../resources/images/busy.png"
             break
+        case 3:
+            status_icon.source = "../resources/images/offline.png"
+            break
         }
     }
 
     onStatusChanged: {
-        set_status(status)
-    }
-
-    onEnabledChanged: {
         set_status(status)
     }
 
@@ -38,7 +37,7 @@ Item {
         id: msgRect
         height: parent.height
         width: parent.width
-        color: "#00ffffff"
+        color: "#242424"
 
         Image {
             id: avatar_img
@@ -87,6 +86,15 @@ Item {
             source: "../resources/images/online.png"
             fillMode: Image.PreserveAspectFit
             antialiasing: true
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            hoverEnabled: true
+
+            onClicked: {
+                click(user_name.text, avatar_img.source)
+            }
         }
     }
 }

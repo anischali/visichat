@@ -5,10 +5,11 @@ import QtQuick.Controls.Material
 import QtQuick.Layouts 2.15
 import QtQuick.Controls 2.15
 
-Page {
-    property ChatMsgItem info: null
-    width: 200
+Item {
+    property string username: ""
+    property string avatar: qsTr("")
 
+    width: 350
     height: 400
 
     ToolBar {
@@ -29,9 +30,39 @@ Page {
             anchors.bottom: parent.bottom
             layoutDirection: Qt.LeftToRight
 
+            RoundButton {
+                id: back_btn
+                text: qsTr("")
+                icon.width: 20
+                icon.source: "../resources/images/back.png"
+                icon.height: 20
+                icon.color: "#babfb6"
+                flat: true
+                antialiasing: true
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+
+                onClicked: {
+                    mainStack.pop()
+                }
+            }
+
+            Image {
+                id: image
+                width: 48
+                height: 48
+                horizontalAlignment: Image.AlignLeft
+                source: avatar
+                cache: true
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                Layout.leftMargin: 0
+                Layout.fillWidth: false
+                Layout.fillHeight: true
+                fillMode: Image.PreserveAspectFit
+            }
+
             Label {
-                id: username
-                text: ""
+                id: user_name
+                text: username
                 font.bold: true
                 Layout.leftMargin: 10
                 Layout.fillWidth: true
@@ -99,7 +130,7 @@ Page {
                 Layout.fillHeight: true
                 color: "white"
                 anchors.fill: parent
-                selectedTextColor: "green"
+                selectedTextColor: "lightblue"
 
                 background: Rectangle {
                     color: "#141414"
@@ -154,11 +185,13 @@ Page {
         anchors.topMargin: 48
         anchors.bottomMargin: 64
         enabled: false
-        color: "#00ffffff"
+        color: "#242424"
 
         ScrollView {
             clip: true
             anchors.fill: parent
+            anchors.topMargin: 10
+            anchors.bottomMargin: 10
 
             ColumnLayout {
                 anchors.fill: parent
@@ -169,7 +202,7 @@ Page {
                     TextField {
                         background: Rectangle {
                             radius: 10
-                            color: parent.index % 2 == 0 ? "green" : "#blue"
+                            color: index % 2 == 0 ? "green" : "#blue"
                         }
 
                         readOnly: true
