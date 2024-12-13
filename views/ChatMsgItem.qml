@@ -8,7 +8,7 @@ Item {
     property string message: qsTr("")
     property string textColor: "white"
 
-    onStatusChanged: {
+    function set_status(status) {
         switch (status) {
         case 0:
             status_icon.source = "../resources/images/offline.png"
@@ -20,6 +20,18 @@ Item {
             status_icon.source = "../resources/images/busy.png"
             break
         }
+    }
+
+    onStatusChanged: {
+        set_status(status)
+    }
+
+    onEnabledChanged: {
+        set_status(status)
+    }
+
+    onMessageChanged: {
+        last_msg.text = message
     }
 
     Rectangle {

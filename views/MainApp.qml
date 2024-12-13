@@ -128,31 +128,62 @@ Item {
                 anchors.fill: parent
             }
 
-            Rectangle {
-                id: rectangle
+            ScrollView {
+                id: scrollView
                 anchors.fill: parent
-                color: "#141414"
+                background: Rectangle {
+                    anchors.fill: parent
+                    color: "#242424"
+                }
 
-                ScrollView {
+                ListView {
+                    id: messages
+                    spacing: 20
+                    interactive: false
                     clip: true
                     anchors.fill: parent
 
-                    ColumnLayout {
-                        anchors.fill: parent
+                    model: [{
+                            "username": "anis",
+                            "message": "ceci etait le dernier message",
+                            "avatar": "../resources/images/default-avatar.png",
+                            "status": 0
+                        }, {
+                            "username": "tiph",
+                            "message": "ceci etait le dernier message",
+                            "avatar": "../resources/images/default-avatar.png",
+                            "status": 1
+                        }, {
+                            "username": "gaby",
+                            "message": "ceci etait le dernier message",
+                            "avatar": "../resources/images/default-avatar.png",
+                            "status": 2
+                        }, {
+                            "username": "roza",
+                            "message": "ceci etait le dernier message",
+                            "avatar": "../resources/images/default-avatar.png",
+                            "status": 2
+                        }, {
+                            "username": "doudouch",
+                            "message": "ceci etait le dernier message",
+                            "avatar": "../resources/images/default-avatar.png",
+                            "status": 0
+                        }]
 
-                        Repeater {
-                            id: messages
-                            model: 20
-
-                            ChatMsgItem {
-                                height: 48
-                                Layout.fillWidth: true
-                                id: msgItem
-                                username: qsTr("anis " + index)
-                                message: qsTr("ceci etait le dernier message")
-                                status: 1
-                                textColor: "white"
-                                avatar: "../resources/images/default-avatar.png"
+                    delegate: ChatMsgItem {
+                        height: 48
+                        Layout.fillWidth: true
+                        id: msgItem
+                        username: qsTr(modelData["username"])
+                        message: qsTr(modelData["message"])
+                        status: modelData["status"]
+                        textColor: "white"
+                        avatar: modelData["avatar"]
+                        MouseArea {
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            onClicked: {
+                                console.log("clicked !!!")
                             }
                         }
                     }

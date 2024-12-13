@@ -17,7 +17,7 @@ Window {
         id: mainStack
         anchors.fill: parent
 
-        initialItem: ChatMsg {
+        initialItem: MainApp {
             anchors.fill: parent
         }
     }

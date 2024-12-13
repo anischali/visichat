@@ -31,7 +31,7 @@ Page {
 
             Label {
                 id: username
-                text: qsTr("Label")
+                text: ""
                 font.bold: true
                 Layout.leftMargin: 10
                 Layout.fillWidth: true
@@ -94,8 +94,6 @@ Page {
 
             TextField {
                 id: msgInput
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
                 anchors.topMargin: 5
                 Layout.fillWidth: true
                 Layout.fillHeight: true
@@ -171,7 +169,7 @@ Page {
                     TextField {
                         background: Rectangle {
                             radius: 10
-                            color: index % 2 == 0 ? "green" : "#blue"
+                            color: parent.index % 2 == 0 ? "green" : "#blue"
                         }
 
                         readOnly: true
