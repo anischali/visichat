@@ -15,6 +15,9 @@ add_link_options(-g -ggdb -O0)
 
 qt_add_executable(appvisichat
     sources/main.cpp
+    sources/qchat.hpp
+    sources/qchat.cpp
+    sources/servers.hpp
 )
 
 qt_add_qml_module(appvisichat
@@ -24,7 +27,9 @@ qt_add_qml_module(appvisichat
         views/MainWindow.qml
         views/ChatMsgItem.qml
         views/MainApp.qml
+        views/ChatMsgsPage.qml
         views/ChatMsg.qml
+        views/QrCodeView.qml
 
     RESOURCES
         resources/visichat.qrc
@@ -44,6 +49,7 @@ qt_add_qml_module(appvisichat
         resources/images/send.png
         resources/images/call.png
         resources/images/back.png
+        resources/images/test.png
         resources/images/default-avatar.png
         android/AndroidManifest.xml
         android/build.gradle android/res/values/libs.xml
@@ -89,6 +95,7 @@ target_link_libraries(appvisichat PRIVATE
     Qbackend
     nlohmann_json
     lite-p2p
+    ZXing::ZXing
 )
 
 set_property(TARGET appvisichat APPEND PROPERTY

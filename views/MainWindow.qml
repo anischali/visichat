@@ -4,6 +4,7 @@ import QtQuick.Controls.Universal
 import QtQuick.Controls.Material
 import QtQuick.Layouts 2.15
 import QtQuick.Controls 2.15
+import "."
 
 Window {
     id: window

@@ -1,13 +1,26 @@
 import QtQuick 6.5
-import QtQuick 6.5
 import QtQuick.Window
 import QtQuick.Controls.Universal
 import QtQuick.Controls.Material
 import QtQuick.Layouts 2.15
 import QtQuick.Controls 2.15
+import QtQuick.Dialogs
+import com.visibog.qchat 1.0
+
+import "."
 
 Item {
     visible: true
+
+    QrCodeView {
+        id: qr_view
+        anchors.fill: parent
+        visible: false
+    }
+
+    QChat {
+        id: qchat
+    }
 
     ToolBar {
         id: header_tab
@@ -25,6 +38,25 @@ Item {
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             layoutDirection: Qt.LeftToRight
+
+            RoundButton {
+                id: mshare_btn
+                icon.source: "../resources/images/share.png"
+                text: qsTr("")
+                antialiasing: true
+                flat: true
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                icon.height: 20
+                icon.width: 20
+                icon.color: "#BABFB6"
+
+                onClicked: {
+
+                    qr_view.image = qchat.shareContact(qr_view.width / 2,
+                                                       qr_view.width / 2)
+                    mainStack.push(qr_view)
+                }
+            }
 
             RoundButton {
                 id: import_btn
@@ -124,7 +156,7 @@ Item {
             anchors.topMargin: 10
             anchors.bottomMargin: 10
 
-            ChatMsg {
+            ChatMsgsPage {
                 id: msgPage
                 anchors.fill: parent
                 visible: false

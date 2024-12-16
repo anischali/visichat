@@ -16,6 +16,7 @@
 #include <QQmlContext>
 #include <thread>
 #include <QDebug>
+#include "qchat.hpp"
 
 
 using namespace qbackend::model;
@@ -57,79 +58,7 @@ uint32_t get_dpi_scale_factor(void)
 void vprint(QQmlApplicationEngine *engine, std::string str) {
     engine->rootContext()->setContextProperty("console_message", str.c_str());
 }
-/*
-int start_chat(int argc, const char *argv[]) {
-        if (argc < 5) {
-            printf("wrong arguments number !\n");
-            exit(0);
-        }
 
-        srand(time(NULL));
-        int family = atoi(argv[1]) == 6 ? AF_INET6 : AF_INET;
-        lite_p2p::peer_connection conn(family, atoi(argv[4]));
-        lite_p2p::turn_client turn(conn.sock_fd);
-        struct stun_session_t s_turn = {
-        .user = "free",
-        .software = "lite-p2p v 1.0",
-        .realm = "freestun.net",
-        .lifetime = 60,
-        .protocol = IPPROTO_UDP,
-        .family = family,
-    };
-
-        struct stun_session_t s_turn = {
-            .user = "visi",
-            .software = "lite-p2p v 1.0",
-            .realm = "visibog.org",
-            .key_algo = SHA_ALGO_MD5,
-            .password_algo = SHA_ALGO_CLEAR,
-            .hmac_algo = SHA_ALGO_SHA1,
-            .lifetime = 60,
-            .protocol = IPPROTO_UDP,
-            .family = family == AF_INET6 ? INET_IPV6 : INET_IPV4,
-            .lt_cred_mech = true,
-        };
-        session_config c;
-        lite_p2p::network::resolve(&s_turn.server, family, argv[2], atoi(argv[3]));
-
-        c.stun_generate_key(&s_turn, "/0X8VMBsdnlL5jWq5xu7ZA==");
-
-        c.stun_register_session(&s_turn);
-
-        lite_p2p::network::string_to_addr(family, argv[6], &conn.remote);
-        lite_p2p::network::set_port(&conn.remote, atoi(argv[5]));
-
-        int ret = turn.allocate_request(&s_turn);
-        if (ret < 0) {
-            printf("request failed with: %d\n", ret);
-            exit(-1);
-        }
-
-        ret = turn.create_permission_request(&s_turn, &conn.remote);
-        ret = turn.bind_channel_request(&s_turn, &conn.remote, htons(rand_int(0x4000,0x4FFF)));
-        ret = turn.refresh_request(&s_turn, s_turn.lifetime);
-        //ret = turn.send_request_data(&s_turn, &conn.remote, s_buf);
-
-        printf("mapped addr: %s:%d relayed addr: %s:%d\n",
-               lite_p2p::network::addr_to_string(&s_turn.mapped_addr).c_str(),
-               lite_p2p::network::get_port(&s_turn.mapped_addr),
-               lite_p2p::network::addr_to_string(&s_turn.relayed_addr).c_str(),
-               lite_p2p::network::get_port(&s_turn.relayed_addr));
-
-
-        printf("bind: %s [%d]\n", lite_p2p::network::addr_to_string(&conn.local).c_str(), lite_p2p::network::get_port(&conn.local));
-        printf("peer: %s [%d]\n", lite_p2p::network::addr_to_string(&conn.remote).c_str(), lite_p2p::network::get_port(&conn.remote));
-
-        std::thread recver(visichat_listener, &conn);
-        std::thread sender(visichat_sender, &conn);
-
-        recver.join();
-        sender.join();
-
-        return 0;
-}
-
-*/
 int main(int argc, char *argv[])
 {
     srand(time(NULL));
@@ -139,10 +68,6 @@ int main(int argc, char *argv[])
 
     std::string path = fmt::format("{}/{}", QStandardPaths::writableLocation(QStandardPaths::ConfigLocation).toStdString(), ORG_NAME);
     settings settings(path, APP_NAME);
-    lite_p2p::peer_connection peer(5002);
-    lite_p2p::stun_client stun(peer.sock_fd);
-    std::vector<lite_p2p::network> ifaces_info;
-
 
 restart:
     initialize_storage();
@@ -208,6 +133,8 @@ restart:
         []() { QCoreApplication::exit(-1); },
         Qt::QueuedConnection);
 
+
+    qmlRegisterType<QChat>("com.visibog.qchat", 1, 0, "QChat");
 
     engine.setInitialProperties({{ "builtInStyles", builtInStyles }});
 
