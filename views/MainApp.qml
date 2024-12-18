@@ -18,6 +18,12 @@ Item {
         visible: false
     }
 
+    QrCodeLoad {
+        id: qr_load
+        anchors.fill: parent
+        visible: false
+    }
+
     QChat {
         id: qchat
     }
@@ -68,6 +74,11 @@ Item {
                 icon.height: 20
                 icon.width: 20
                 icon.color: "#BABFB6"
+
+                onClicked: {
+                    qr_load.start_camera()
+                    mainStack.push(qr_load)
+                }
             }
 
             RoundButton {

@@ -6,9 +6,9 @@ project(visichat VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_AUTOMOC ON)
 
-find_package(Qt6 6.8 REQUIRED COMPONENTS Core Gui Qml Quick QuickControls2 Quick)
+find_package(Qt6 6.8 REQUIRED COMPONENTS Core Gui Qml Quick QuickControls2 Multimedia)
 
-qt_standard_project_setup(REQUIRES 6.5)
+qt_standard_project_setup(REQUIRES 6.0)
 
 add_compile_options(-g -ggdb -O0)
 add_link_options(-g -ggdb -O0)
@@ -30,6 +30,7 @@ qt_add_qml_module(appvisichat
         views/ChatMsgsPage.qml
         views/ChatMsg.qml
         views/QrCodeView.qml
+        views/QrCodeLoad.qml
 
     RESOURCES
         resources/visichat.qrc

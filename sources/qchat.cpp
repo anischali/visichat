@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <QImage>
 #include <QBuffer>
+#include <QDebug>
 #include <fmt/core.h>
 #include <fmt/format.h>
 
@@ -63,4 +64,31 @@ QString QChat::shareContact(int width, int height) {
     q_img.save(&b_img, "PNG");
 
     return QString("data:image/png;base64," + QString(b_img.data().toBase64()));
+}
+
+QString QChat::imgToBase64(QImage q_img) {
+
+    QBuffer b_img;
+
+    q_img.save(&b_img, "PNG");
+
+    return QString(b_img.data().toBase64());
+}
+
+
+QString QChat::importContact(QString b64_img, int x, int y, int width, int height) {
+    QImage q_img, q_tmp;
+
+    auto img_buf = lite_p2p::crypto::crypto_base64_decode(b64_img.toStdString().c_str(), b64_img.length());
+
+    q_img.loadFromData(img_buf.data(), img_buf.size(), "PNG");
+
+    q_tmp = q_img.copy(x, y, width, height);
+
+    auto iv = ZXing::ImageView((uint8_t *)q_tmp.data_ptr(), q_tmp.width(), q_tmp.height(), ZXing::ImageFormat::RGB, 0, 0);
+
+    auto pth = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/qr-code.png";
+    q_tmp.save(pth, "PNG");
+
+    return QString(qrcode->read(iv).c_str());
 }

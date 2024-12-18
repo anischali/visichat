@@ -32,6 +32,9 @@ public:
     ~QChat();
 
     Q_INVOKABLE QString shareContact(int width, int height);
+    Q_INVOKABLE QString importContact(QString b64_img,
+                    int x, int y, int width, int height);
+    Q_INVOKABLE QString imgToBase64(QImage q_img);
 };
 
 #endif // QCHAT_H
