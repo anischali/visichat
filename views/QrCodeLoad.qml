@@ -51,9 +51,8 @@ Rectangle {
     }
 
     Rectangle {
-        height: parent.height / 2
-        width: parent.width / 2
-        anchors.centerIn: parent
+        anchors.fill: parent
+        color: "#242424"
 
         ColumnLayout {
             anchors.fill: parent
@@ -65,8 +64,8 @@ Rectangle {
                 Rectangle {
                     id: cap_obj
                     color: "#00000000"
-                    height: 256
-                    width: 256
+                    height: output.height - output.height / 3
+                    width: output.width - output.width / 3
                     anchors.centerIn: parent
 
                     border.color: "red"

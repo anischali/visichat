@@ -6,9 +6,9 @@ project(visichat VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_AUTOMOC ON)
 
-find_package(Qt6 6.8 REQUIRED COMPONENTS Core Gui Qml Quick QuickControls2 Multimedia)
+find_package(Qt6 6.5 REQUIRED COMPONENTS Core Gui Qml Quick QuickControls2 Multimedia)
 
-qt_standard_project_setup(REQUIRES 6.0)
+qt_standard_project_setup(REQUIRES 6.5)
 
 add_compile_options(-g -ggdb -O0)
 add_link_options(-g -ggdb -O0)
@@ -93,6 +93,7 @@ target_link_libraries(appvisichat PRIVATE
     Qt6::Qml
     Qt6::Quick
     Qt6::QuickControls2
+    Qt6::Multimedia
     fmt::fmt
     Qbackend
     nlohmann_json

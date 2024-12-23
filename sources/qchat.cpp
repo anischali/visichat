@@ -87,7 +87,7 @@ QString QChat::importContact(QString b64_img, int x, int y, int width, int heigh
 
     auto iv = ZXing::ImageView((uint8_t *)q_tmp.data_ptr(), q_tmp.width(), q_tmp.height(), ZXing::ImageFormat::RGB, 0, 0);
 
-    auto pth = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/qr-code.png";
+    auto pth = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation) + "/qr-code.png";
     q_tmp.save(pth, "PNG");
 
     return QString(qrcode->read(iv).c_str());
