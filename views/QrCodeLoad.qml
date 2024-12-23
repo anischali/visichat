@@ -1,4 +1,4 @@
-import QtQuick 6.5
+import QtQuick 6.8
 import QtQuick.Controls
 import QtMultimedia
 import QtQuick.Window
@@ -26,6 +26,16 @@ Rectangle {
         captureSession.imageCapture.capture()
     }
 
+    function capture_rectangle(img_w, img_h, paint_w, paint_h, paint_rect_w, paint_rect_h) {
+        let scale_w = img_w / paint_w
+        let scale_h = img_h / paint_h
+
+        let rect_w = paint_rect_w * scale_w
+        let rect_h = paint_rect_h * scale_h
+
+        return [rect_w, rect_h]
+    }
+
     CaptureSession {
         id: captureSession
         videoOutput: output
@@ -36,7 +46,6 @@ Rectangle {
                 img_preview.visible = true
                 output.visible = false
                 b64_image = qchat.imgToBase64(preview)
-                console.log(preview)
             }
         }
     }
@@ -72,8 +81,8 @@ Rectangle {
             }
 
             RoundButton {
-                anchors.centerIn: parent
                 text: "Capture"
+                anchors.centerIn: parent
 
                 onClicked: {
                     if (!captured) {
@@ -87,9 +96,22 @@ Rectangle {
                         text = "capture"
                         captured = false
                         stop_camera()
-                        console.log(qchat.importContact(b64_image, 0, 0,
-                                                        cap_obj.width,
-                                                        cap_obj.height))
+                        let pic_rect = capture_rectangle(
+                                img_preview.sourceSize.width,
+                                img_preview.sourceSize.height,
+                                img_preview.paintedWidth,
+                                img_preview.paintedHeight, cap_obj.width,
+                                cap_obj.height)
+
+                        console.log(`${pic_rect}`)
+
+                        let contact = qchat.importContact(
+                                b64_image,
+                                (img_preview.sourceSize.width / 2) - (pic_rect[0] / 2),
+                                (img_preview.sourceSize.height / 2) - (pic_rect[1] / 2),
+                                pic_rect[0], pic_rect[1])
+
+                        console.log(`contact: ${contact}`)
                     }
                 }
             }

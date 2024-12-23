@@ -13,8 +13,8 @@
 
 QChat::QChat(QObject *parent) : QObject(parent) {
 
-    peer = new lite_p2p::peer_connection(5002);
-    stun = new lite_p2p::stun_client(peer->sock_fd);
+    peer = new lite_p2p::peer::connection(5002);
+    stun = new lite_p2p::protocol::stun::client(peer->sock_fd);
     qrcode = new qbackend::engines::qrcode_engine();
 
     struct stun_server_t srv = stun_servers["google"];
@@ -38,8 +38,8 @@ QChat::QChat(QObject *parent) : QObject(parent) {
 
 QChat::~QChat()
 {
-    peer->~peer_connection();
-    stun->~stun_client();
+    peer->~connection();
+    stun->~client();
     qrcode->~qrcode_engine();
 }
 

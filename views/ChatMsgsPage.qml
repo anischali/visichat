@@ -141,9 +141,9 @@ Item {
 
             RowLayout {
                 id: rowLayout3
-                anchors.right: parent.right
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
+                Layout.rightMargin: 0
+                Layout.topMargin: 0
+                Layout.bottomMargin: 0
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 antialiasing: true

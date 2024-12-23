@@ -2,13 +2,13 @@
 #define SERVERS_HPP
 
 
-#include "lite-p2p/cleanup.hpp"
-#include "lite-p2p/stun_client.hpp"
-#include "lite-p2p/turn_client.hpp"
-#include "lite-p2p/peer_connection.hpp"
-#include "lite-p2p/network.hpp"
-#include "lite-p2p/ice_agent.hpp"
-#include "lite-p2p/stun_session.hpp"
+#include <lite-p2p/common/common.hpp>
+#include <lite-p2p/protocol/stun/client.hpp>
+#include <lite-p2p/protocol/turn/client.hpp>
+#include <lite-p2p/peer/connection.hpp>
+#include <lite-p2p/network/network.hpp>
+#include <lite-p2p/protocol/ice/agent.hpp>
+#include <lite-p2p/protocol/stun/session.hpp>
 
 std::map<std::string, struct stun_server_t> stun_servers = {
     {

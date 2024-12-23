@@ -9,12 +9,11 @@
 #include <storage_engine.hpp>
 #include <fmt/core.h>
 #include <fmt/format.h>
-#include <lite-p2p/peer_connection.hpp>
-#include <lite-p2p/stun_client.hpp>
-#include <lite-p2p/turn_client.hpp>
-#include <lite-p2p/network.hpp>
+#include <lite-p2p/peer/connection.hpp>
+#include <lite-p2p/protocol/stun/client.hpp>
+#include <lite-p2p/protocol/turn/client.hpp>
+#include <lite-p2p/network/network.hpp>
 #include <QQmlContext>
-#include <thread>
 #include <QDebug>
 #include "qchat.hpp"
 

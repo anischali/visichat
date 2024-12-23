@@ -24,13 +24,13 @@ qt_add_qml_module(appvisichat
     URI visichat
     VERSION 1.0
     QML_FILES
-        views/MainWindow.qml
         views/ChatMsgItem.qml
-        views/MainApp.qml
         views/ChatMsgsPage.qml
         views/ChatMsg.qml
         views/QrCodeView.qml
         views/QrCodeLoad.qml
+        views/MainApp.qml
+        views/MainWindow.qml
 
     RESOURCES
         resources/visichat.qrc
@@ -53,7 +53,8 @@ qt_add_qml_module(appvisichat
         resources/images/test.png
         resources/images/default-avatar.png
         android/AndroidManifest.xml
-        android/build.gradle android/res/values/libs.xml
+        android/build.gradle
+        android/res/values/libs.xml
         android/res/xml/qtprovider_paths.xml
         android/gradle/wrapper/gradle-wrapper.jar
         android/gradle/wrapper/gradle-wrapper.properties
