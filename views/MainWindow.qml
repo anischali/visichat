@@ -4,7 +4,7 @@ import QtQuick.Controls.Universal
 import QtQuick.Controls.Material
 import QtQuick.Controls 2.15
 
-MainWindow {
+Window {
     id: window
     property var builtInStyles
 
